@@ -11,7 +11,7 @@ class JDDetailCapture(IShopDetail):
     item_url = None
 
     def __init__(self, item_id):
-        self.item_id = item_id
+        self.item_id = int(item_id)
         self.item_url = 'https://item.jd.com/%d.html' % self.item_id
 
     def capture(self):
@@ -52,7 +52,7 @@ class JDDetailCapture(IShopDetail):
 
     @classmethod
     def get_item_price(cls, item_json):
-        return item_json['wMaprice']
+        return float(item_json['wMaprice'])
 
     @classmethod
     def is_item_sold_out(cls, item_json):
@@ -60,7 +60,7 @@ class JDDetailCapture(IShopDetail):
 
 
 if __name__ == '__main__':
-    item_id = 100001877615
+    item_id = 4648654
     jd = JDDetailCapture(item_id)
     result = jd.capture()
     print(jd.get_item_name(result))

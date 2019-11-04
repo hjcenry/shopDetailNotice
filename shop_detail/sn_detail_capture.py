@@ -1,4 +1,6 @@
 import json
+from json import JSONDecodeError
+
 import requests
 import time
 import math
@@ -12,7 +14,7 @@ class SuningDetailCapture(IShopDetail):
     item_url = None
 
     def __init__(self, item_id):
-        self.item_id = item_id
+        self.item_id = int(item_id)
         self.item_url = 'https://product.suning.com/0000000000/%d.html?safp=d488778a.13701.productWrap.11&safc=prd.3.ssdsn_name02-1_jz' % self.item_id
 
     def capture(self):
@@ -20,7 +22,9 @@ class SuningDetailCapture(IShopDetail):
         抓取苏宁商品接口
         :return:
         """
-        url = "https://pas.suning.com/nspcsale_0_000000010437707469_0000000%d_0000000000_10_010_0100101_20089_1000000_9017_10106_Z001___R1207002_0.565_0___000051813___.html" % self.item_id
+        url_item_id = str(self.item_id).zfill(18)
+        url = "https://pas.suning.com/nspcsale_0_%s_%s_0000000000_10_010_0100101_20089_1000000_9017_10106_Z001___R1304001_0.565_0___000051813___.html" % (
+            url_item_id, url_item_id)
         querystring = {
             'callback': 'pcData',
             '_': math.floor(time.time() * 1000)
@@ -32,8 +36,12 @@ class SuningDetailCapture(IShopDetail):
         }
         response = requests.request("GET", url, headers=headers, params=querystring)
         result_sub = response.text.replace('pcData', '')[1:-2]
-        result_json = json.loads(result_sub)
-        item_json = result_json['data']['price']['saleInfo'][0]
+        try:
+            result_json = json.loads(result_sub)
+        except JSONDecodeError:
+            item_json = {'promotionPrice': ''}
+        else:
+            item_json = result_json['data']['price']['saleInfo'][0]
         return item_json
 
     @classmethod
@@ -65,7 +73,7 @@ class SuningDetailCapture(IShopDetail):
 
     @classmethod
     def get_item_price(cls, item_json):
-        return 0 if item_json['promotionPrice'] == '' else item_json['promotionPrice']
+        return 0 if item_json['promotionPrice'] == '' else float(item_json['promotionPrice'].replace('?', '9'))
 
     @classmethod
     def is_item_sold_out(cls, item_json):
@@ -73,7 +81,8 @@ class SuningDetailCapture(IShopDetail):
 
 
 if __name__ == '__main__':
-    item_id = 10437707469
+    # item_id = 10437707469
+    item_id = 120876176
     sn = SuningDetailCapture(item_id)
     result = sn.capture()
     print(sn.get_item_name(result, item_id))

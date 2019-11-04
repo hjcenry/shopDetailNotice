@@ -12,7 +12,7 @@ class GomeDetailCapture(IShopDetail):
     item_url = None
 
     def __init__(self, item_id):
-        self.item_id = item_id
+        self.item_id = str(item_id)
         self.item_url = 'https://item.gome.com.cn/%s.html?intcmp=list-9000000700-1_1_1^&search_id=CATPL^@1pYSyIkQ35uE' % self.item_id
 
     def capture(self):
@@ -55,7 +55,7 @@ class GomeDetailCapture(IShopDetail):
     def get_item_price(cls, item_json):
         if item_json is None:
             return 0
-        return item_json['gomePrice']['salePrice']
+        return float(item_json['gomePrice']['salePrice'])
 
     @classmethod
     def is_item_sold_out(cls, item_json):
