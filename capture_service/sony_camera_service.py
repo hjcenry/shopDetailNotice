@@ -1,7 +1,7 @@
 import os
 
-import capture_factory
-from redis_dao import RedisDao
+import shop_detail.capture_factory as capture_factory
+from datasource.redis_dao import RedisDao
 from model.price_model import PriceMode
 
 
