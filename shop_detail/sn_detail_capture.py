@@ -46,14 +46,15 @@ class SuningDetailCapture(IShopDetail):
 
     @classmethod
     def get_item_name(cls, item_json, item_id):
-        url = "https://product.suning.com/0000000000/%d.html" % item_id
+        url = "https://product.suning.com/0000000000/%d.html" % int(item_id)
         querystring = {
             "safp": "d488778a.13701.productWrap.10",
             "safc": "prd.3.ssdsn_pic02-1_jz"
         }
         headers = {
             'Sec-Fetch-Mode': "no-cors",
-            'Referer': "https://product.suning.com/0000000000/%d.html?safp=d488778a.13701.productWrap.11^&safc=prd.3.ssdsn_name02-1_jz" % item_id,
+            'Referer': "https://product.suning.com/0000000000/%d.html?safp=d488778a.13701.productWrap.11^&safc=prd.3.ssdsn_name02-1_jz" % int(
+                item_id),
             'User-Agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36",
             'Accept': "*/*",
             'Cache-Control': "no-cache",

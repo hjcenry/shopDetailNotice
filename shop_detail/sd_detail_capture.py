@@ -42,7 +42,7 @@ class SundanDetailCapture(IShopDetail):
 
     @classmethod
     def get_item_name(cls, item_json, item_id):
-        url = "https://www.sundan.com/product-%d.html" % item_id
+        url = "https://www.sundan.com/product-%d.html" % int(item_id)
         headers = {
             'Connection': "keep-alive",
             'Cache-Control': "max-age=0",

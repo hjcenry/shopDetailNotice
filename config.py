@@ -8,7 +8,7 @@ class Config(object):
 
     def __init__(self, file_path):
         cf = configparser.RawConfigParser()
-        cf.read(file_path)
+        cf.read(file_path, encoding="utf-8-sig")
         secs = cf.sections()
         config_dict = {}
         for sec in secs:

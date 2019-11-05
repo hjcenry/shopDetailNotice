@@ -47,7 +47,7 @@ class JDDetailCapture(IShopDetail):
         return item_json
 
     @classmethod
-    def get_item_name(cls, item_json):
+    def get_item_name(cls, item_json, item_id):
         return item_json['wName']
 
     @classmethod

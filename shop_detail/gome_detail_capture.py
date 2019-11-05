@@ -42,7 +42,7 @@ class GomeDetailCapture(IShopDetail):
 
     @classmethod
     def get_item_name(cls, item_json, item_id):
-        url = "https://item.gome.com.cn/%s.html" % item_id
+        url = "https://item.gome.com.cn/%s.html" % str(item_id)
         response = requests.request("GET", url)
         html = etree.HTML(response.text)
         name_result = html.xpath('//div[@class="hgroup"]/h1/text()')
