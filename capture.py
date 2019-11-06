@@ -1,5 +1,5 @@
 from config import Config
-from sony_camera_service import SonyCameraService
+from capture_service.sony_camera_service import SonyCameraService
 
 config = Config('config.ini')
 
