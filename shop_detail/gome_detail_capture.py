@@ -63,9 +63,15 @@ class GomeDetailCapture(IShopDetail):
 
 
 if __name__ == '__main__':
-    item_id = '9140125925-1130643932'
-    gome = GomeDetailCapture(item_id)
-    result = gome.capture()
-    print(gome.get_item_name(result, item_id))
-    print(gome.get_item_price(result))
-    print(gome.is_item_sold_out(result))
+    item_ids = ['A0006411068-pop8011197771', 'A0004869023-pop8004164038', 'A0006577122-pop8012869734']
+    price = 0
+    for item_id in item_ids:
+        gome = GomeDetailCapture(item_id)
+        result = gome.capture()
+        print(gome.get_item_name(result, item_id))
+        item_price = gome.get_item_price(result)
+        print(gome.get_item_price(result))
+        price = price + item_price
+        # print(gome.is_item_sold_out(result))
+
+    print(price)

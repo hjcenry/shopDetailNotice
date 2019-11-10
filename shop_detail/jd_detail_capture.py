@@ -60,9 +60,15 @@ class JDDetailCapture(IShopDetail):
 
 
 if __name__ == '__main__':
-    item_id = 4648654
-    jd = JDDetailCapture(item_id)
-    result = jd.capture()
-    print(jd.get_item_name(result))
-    print(jd.get_item_price(result))
-    print(jd.is_item_sold_out(result))
+    item_ids = [100001877615, 4648654]
+    price = 0
+    for item_id in item_ids:
+        jd = JDDetailCapture(item_id)
+        result = jd.capture()
+        print(jd.get_item_name(result, 100001877615))
+        item_price = jd.get_item_price(result)
+        print(jd.get_item_price(result))
+        price = price + item_price
+        # print(jd.is_item_sold_out(result))
+
+    print(price)

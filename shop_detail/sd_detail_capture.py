@@ -77,9 +77,15 @@ class SundanDetailCapture(IShopDetail):
 
 
 if __name__ == '__main__':
-    item_id = 3034
-    sd = SundanDetailCapture(item_id)
-    result = sd.capture()
-    print(sd.get_item_name(result, item_id))
-    print(sd.get_item_price(result))
-    print(sd.is_item_sold_out(result))
+    item_ids = [20286, 3034]
+    price = 0
+    for item_id in item_ids:
+        sd = SundanDetailCapture(item_id)
+        result = sd.capture()
+        print(sd.get_item_name(result, item_id))
+        item_price = sd.get_item_price(result)
+        print(sd.get_item_price(result))
+        price = price + item_price
+        # print(sd.is_item_sold_out(result))
+
+    print(price)

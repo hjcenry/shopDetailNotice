@@ -82,10 +82,15 @@ class SuningDetailCapture(IShopDetail):
 
 
 if __name__ == '__main__':
-    # item_id = 10437707469
-    item_id = 120876176
-    sn = SuningDetailCapture(item_id)
-    result = sn.capture()
-    print(sn.get_item_name(result, item_id))
-    print(sn.get_item_price(result))
-    print(sn.is_item_sold_out(result))
+    item_ids = [10437707469, 120876176, 614433821]
+    price = 0
+    for item_id in item_ids:
+        sn = SuningDetailCapture(item_id)
+        result = sn.capture()
+        print(sn.get_item_name(result, item_id))
+        item_price = sn.get_item_price(result);
+        print(item_price)
+        price = price + item_price
+        # print(sn.is_item_sold_out(result))
+
+    print(price)
