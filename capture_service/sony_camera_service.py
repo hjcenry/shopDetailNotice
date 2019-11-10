@@ -95,6 +95,8 @@ class SonyCameraService(object):
     @classmethod
     def msg_notice(cls, content):
         print('notice msg!!!!:' + content)
-        invoke_shell = "cd /home/pi/Soft/python/sender;python3 /home/pi/Soft/python/sender/sender.py -st 4 -t \"%s\"" % content
+        invoke_shell = "cd /home/pi/Soft/python/sender;python3 /home/pi/Soft/python/sender/sender.py -st 5 -t \"%s\" " \
+                       "-c \"%s\"" % (
+                           content, content)
         result = os.system(invoke_shell)
         return result is 0
