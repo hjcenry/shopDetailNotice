@@ -3,6 +3,8 @@ import requests
 import time
 import math
 
+from lxml import etree
+
 from shop_detail.i_shop_detail import IShopDetail
 
 
@@ -58,17 +60,44 @@ class JDDetailCapture(IShopDetail):
     def is_item_sold_out(cls, item_json):
         return item_json['wMaprice'] == -1.0
 
+    @classmethod
+    def get_item_sold_out_text(cls, item_id):
+        url = "https://item.jd.com/%d.html" % int(item_id)
+        headers = {
+            "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3",
+            "accept-encoding": "gzip, deflate, br",
+            "accept-language": "zh-CN,zh;q=0.9",
+            "cache-control": "max-age=0",
+            "sec-fetch-mode": "navigate",
+            "sec-fetch-site": "none",
+            "sec-fetch-user": "?1",
+            "upgrade-insecure-requests": "1",
+            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36"
+        }
+        response = requests.request("GET", url, headers=headers)
+        html = etree.HTML(response.text)
+        name_result = html.xpath('//div[@class="w"]/text()')
+        print(name_result)
+        if name_result == '有货':
+            return name_result
+        else:
+            name_result = html.xpath('//div[@class="w"]/div[@class="summary-stock"]/div[@class="store-prompt"]//text()')
+            return name_result
+
 
 if __name__ == '__main__':
     item_ids = [100001877615, 4648654]
     price = 0
     for item_id in item_ids:
         jd = JDDetailCapture(item_id)
-        result = jd.capture()
-        print(jd.get_item_name(result, 100001877615))
-        item_price = jd.get_item_price(result)
-        print(jd.get_item_price(result))
-        price = price + item_price
+        text = jd.get_item_sold_out_text(item_id)
+        # print(text)
+        #
+        # result = jd.capture()
+        # print(jd.get_item_name(result, 100001877615))
+        # item_price = jd.get_item_price(result)
+        # print(jd.get_item_price(result))
+        # price = price + item_price
         # print(jd.is_item_sold_out(result))
 
     print(price)

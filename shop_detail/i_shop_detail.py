@@ -48,3 +48,12 @@ class IShopDetail(object):
         :return:
         """
         pass
+
+    @classmethod
+    def get_item_sold_out_text(cls, item_id):
+        """
+        获取商品的自定义描述
+        :param item_id: 物品id
+        :return: 货物描述
+        """
+        pass

@@ -80,6 +80,9 @@ class SuningDetailCapture(IShopDetail):
     def is_item_sold_out(cls, item_json):
         return item_json['promotionPrice'] == ''
 
+    @classmethod
+    def get_item_sold_out_text(cls, item_id):
+        return "无货"
 
 if __name__ == '__main__':
     item_ids = [10437707469, 120876176, 614433821]

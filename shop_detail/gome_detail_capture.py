@@ -61,6 +61,10 @@ class GomeDetailCapture(IShopDetail):
     def is_item_sold_out(cls, item_json):
         return item_json is None
 
+    @classmethod
+    def get_item_sold_out_text(cls, item_id):
+        return "无货"
+
 
 if __name__ == '__main__':
     item_ids = ['A0006411068-pop8011197771', 'A0004869023-pop8004164038', 'A0006577122-pop8012869734']

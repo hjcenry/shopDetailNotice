@@ -75,6 +75,9 @@ class SundanDetailCapture(IShopDetail):
         print("sundan not supported")
         return False
 
+    @classmethod
+    def get_item_sold_out_text(cls, item_id):
+        return "无货"
 
 if __name__ == '__main__':
     item_ids = [20286, 3034]
